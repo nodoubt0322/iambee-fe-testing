@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import { message } from 'antd';
-import axios from 'axios'
-import { debounce } from '@/utils'
+import request from '@/utils/request'
 
-import { searchRes as res } from '@/data/index'
+// import { searchRes as res } from '@/data/index'
 
 export default function useQuestionSearch(query, page) {
     const [loading, setLoading] = useState(true)
@@ -17,31 +16,31 @@ export default function useQuestionSearch(query, page) {
     useEffect(() => {
         const fetchData = async () => {
             console.log('fetch search', query)
-            // if (!query) return;
-            // const params ={
-            //     pagesize:20,
-            //     site:'stackoverflow',
-            //     order:'desc',
-            //     sort:'activity',
-            //     tagged:query,
-            //     page,
-            // }
-            // const url = 'https://api.stackexchange.com/2.3/questions'
-            // const method = 'get'
-            // const option = { url, method, params }
+            if (!query) return;
+            const params ={
+                pagesize:20,
+                site:'stackoverflow',
+                order:'desc',
+                sort:'activity',
+                tagged:query,
+                page,
+            }
+            const url = '/questions'
+            const method = 'get'
+            const option = { url, method, params }
 
-            // setLoading(true)
-            // const res = await axios(option).catch(err => console.log(err))
+            setLoading(true)
+            const res = await request(option).catch(err => console.log(err))
             setLoading(false)
             
             if (!res) return message.error('Cannot fetch data from server');
         
-            if (res.data.quota_remaining === 0) setHasMore(false)
+            if (res.quota_remaining === 0) setHasMore(false)
 
-            const contentArr = res.data.items.map(item => {
-                const { answer_count, score, view_count, link, owner, title } = item
+            const contentArr = res.items.map(item => {
+                const { is_answered, answer_count, score, view_count, link, owner, title } = item
                 const { display_name, profile_image} = owner
-                const content = { title, answer_count, score, view_count, link, display_name, profile_image }
+                const content = { title, is_answered, answer_count, score, view_count, link, display_name, profile_image }
             
                 return content
             })

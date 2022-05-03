@@ -1,7 +1,6 @@
 import { Tag } from 'antd';
 
 export default function TagGroup ({ tags, handleChooseTag, chosenTag }){
-
     return (
         <div>
             {   
