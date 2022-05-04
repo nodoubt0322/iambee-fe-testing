@@ -30,7 +30,7 @@ function App() {
   }
 
   return (
-    <div className='container mx-auto'>
+    <div className='container mx-auto px-4'>
       <header className="py-10 sticky top-0 bg-white">
         <Search 
           placeholder="Tag" 

@@ -6,4 +6,5 @@ import path from 'path'
 export default defineConfig({
   resolve: { alias: { "@": path.resolve(process.cwd(), "src") } },
   plugins: [react(), Unocss()],
+  base: '/iambee-fe-testing/'
 })
