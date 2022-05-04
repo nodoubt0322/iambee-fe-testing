@@ -15,7 +15,6 @@ export default function useQuestionSearch(query, page) {
 
     useEffect(() => {
         const fetchData = async () => {
-            console.log('fetch search', query)
             if (!query) return;
             const params ={
                 pagesize:20,
